@@ -36,6 +36,25 @@ Capistrano::Lastmile.load_named(:database_yaml) do
 
 
   # =========================================================================
+  # These are default variables that will be set unless overriden.
+  # =========================================================================
+
+  lm_cset(:db_username) do
+    abort <<-ABORT.gsub(/^ {8}/, '')
+      Please specify the name of your dabatase application user. You need
+      this to be less than 16 characters for MySQL. For exaple:
+
+        set :db_username, 'bunny_prd'
+
+    ABORT
+  end
+
+  lm_cset :db_adapter,  "mysql"
+  lm_cset :db_host,     "localhost"
+  lm_cset(:db_database) { "#{application}_#{deploy_env}" }
+
+
+  # =========================================================================
   # These are the tasks that are available to help with deploying web apps,
   # and specifically, Rails applications. You can have cap give you a summary
   # of them with `cap -T'.
