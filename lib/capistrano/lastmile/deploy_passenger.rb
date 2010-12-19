@@ -1,4 +1,4 @@
-Capistrano::Lastmile.load_named(:passenger) do
+Capistrano::Lastmile.load_named(:deploy_passenger) do
 
   # =========================================================================
   # These are the tasks that are available to help with deploying web apps,

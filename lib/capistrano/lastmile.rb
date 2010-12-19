@@ -23,7 +23,7 @@ module Capistrano
       load { load 'deploy' }
 
       # load in deployment and other task overrides
-      load_recipe! %{deploy_passenger}
+      load_recipe! %w{deploy_passenger}
     end
   end
 end
