@@ -13,6 +13,7 @@ Capistrano::Lastmile.load_named(:defaults) do
   lm_cset :user,            "deploy"
   lm_cset :use_sudo,        false
   lm_cset :bundle_without,  [:development, :test, :test_mac]
+  lm_cset :rails_env,       "production"
 
   lm_cset(:deploy_to) { "/srv/#{application}" }
 end

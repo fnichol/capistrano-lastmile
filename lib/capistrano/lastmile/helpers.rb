@@ -13,6 +13,24 @@ Capistrano::Lastmile.load do
   end
 
   ##
+  # Determines deployment environment or run mode to help database naming,
+  # deploy directories, etc.
+  #
+  # Thanks to capistrano-recipies for the great idea:
+  # https://github.com/webficient/capistrano-recipes
+  def deploy_env
+    if exists?(:stage)
+      stage
+    elsif exists?(:rails_env)
+      rails_env
+    elsif (ENV['RAILS_ENV'])
+      ENV['RAILS_ENV']
+    else
+      'production'
+    end
+  end
+
+  ##
   # Runs a remote bash if condition and returns (ruby) true/false.
   #
   # @param [String] expr  a shell expression that can evaluate to true/false
