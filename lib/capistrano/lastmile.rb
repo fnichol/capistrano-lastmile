@@ -10,7 +10,6 @@ module Capistrano
     end
 
     def self.load_recipe!(*recipes)
-      puts "wtf: #{recipes.inspect}"
       recipes.flatten.each { |r| require "capistrano/lastmile/#{r}" }
     end
   end
