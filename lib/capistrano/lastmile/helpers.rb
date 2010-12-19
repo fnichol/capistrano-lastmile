@@ -5,7 +5,11 @@ Capistrano::Lastmile.load do
   # =========================================================================
 
   def disabled?(recipe)
-    exists?(recipe) && send(recipe) == false
+    exists?("use_#{recipe}") && send("use_#{recipe}") == false
+  end
+
+  def lm_cset(name, *args, &block)
+    set(name, *args, &block) unless exists?(name)
   end
 
   ##

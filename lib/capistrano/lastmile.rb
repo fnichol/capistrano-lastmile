@@ -1,3 +1,5 @@
+# A huge thanks to youthtree-capistrano for the loading and disabling pattern.
+# https://github.com/YouthTree/youthtree-capistrano/
 module Capistrano
   module Lastmile
 
@@ -12,7 +14,12 @@ module Capistrano
     def self.load_recipe!(*recipes)
       recipes.flatten.each { |r| require "capistrano/lastmile/#{r}" }
     end
+
+    def self.load_all!
+      load_recipe! %w{helpers defaults rvm bundler}
+      load { load 'deploy' }
+    end
   end
 end
 
-Capistrano::Lastmile.load_recipe! "helpers"
+Capistrano::Lastmile.load_all!
