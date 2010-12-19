@@ -16,7 +16,7 @@ module Capistrano
     end
 
     def self.load_all!
-      load_recipe! %w{helpers defaults rvm bundler}
+      load_recipe! %w{helpers defaults rvm bundler database_yaml db mysql}
       load { load 'deploy' }
     end
   end
