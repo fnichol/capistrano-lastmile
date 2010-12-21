@@ -16,4 +16,7 @@ Capistrano::Lastmile.load_named(:defaults) do
   lm_cset :rails_env,       "production"
 
   lm_cset(:deploy_to) { "/srv/#{application}" }
+
+  # default-disabled recipes
+  lm_cset :use_config_yaml, false
 end
