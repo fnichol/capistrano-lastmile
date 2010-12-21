@@ -1,4 +1,4 @@
-production:
+<%= rails_env %>:
   adapter: <%%= RUBY_PLATFORM =~ /java/ ? 'jdbc<%= db_adapter %>' : '<%= db_adapter %>' %>
   username: <%= db_username %>
   password: <%= db_password %>
