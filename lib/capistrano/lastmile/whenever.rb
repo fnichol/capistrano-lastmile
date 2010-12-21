@@ -21,7 +21,6 @@ Capistrano::Lastmile.load_named(:whenever) do
     task :clear, :roles => :db, :only => { :primary => true } do
       run "cd #{release_path} && bundle exec whenever --clear-crontab #{application}"
     end
-
   end
 
   after "deploy:symlink", "cron:update"
