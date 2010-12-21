@@ -18,7 +18,7 @@ module Capistrano
     def self.load_all!
       # load environment and extra recipes
       load_recipe! %w{helpers defaults rvm bundler database_yaml db 
-        mysql config_yaml}
+        mysql config_yaml console}
 
       # load default capistrano recipes
       load { load 'deploy' }
