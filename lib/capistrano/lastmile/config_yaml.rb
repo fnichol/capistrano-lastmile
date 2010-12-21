@@ -21,6 +21,7 @@ Capistrano::Lastmile.load_named(:config_yaml) do
   # =========================================================================
 
   namespace :config do
+
     desc <<-DESC
       Prepares config.yml from template. If the file exists remotely, the \
       file is not created but is skipped over. To force the creation of a new \
