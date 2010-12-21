@@ -8,7 +8,8 @@ Capistrano::Lastmile.load_named(:database_yaml) do
   # Writes out a database.yml from an ERB template.
   #
   def database_yml
-    template = File.read(File.join(File.dirname(__FILE__), %w{templates database.yml.erb}))
+    template = File.read(File.join(File.dirname(__FILE__), 
+      %w{templates database.yml.erb}))
     ERB.new(template).result(binding)
   end
 
