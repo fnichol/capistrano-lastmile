@@ -12,6 +12,7 @@ Capistrano::Lastmile.load_named(:defaults) do
   lm_cset :scm,             :git
   lm_cset :user,            "deploy"
   lm_cset :use_sudo,        false
+  lm_cset :keep_releases,   10
   lm_cset :bundle_without,  [:development, :test, :test_mac]
   lm_cset :rails_env,       "production"
 
