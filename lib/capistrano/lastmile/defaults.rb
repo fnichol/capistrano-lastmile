@@ -16,7 +16,13 @@ Capistrano::Lastmile.load_named(:defaults) do
   lm_cset :bundle_without,  [:development, :test, :test_mac]
   lm_cset :rails_env,       "production"
 
-  lm_cset(:deploy_to) { "/srv/#{application}" }
+  lm_cset(:deploy_to)       { "/srv/#{application}" }
+
+  if exists?(:deploy_server)
+    role(:web)                  { deploy_server }
+    role(:app)                  { deploy_server }
+    role(:db, :primary => true) { deploy_server }
+  end
 
   # default-disabled recipes
   lm_cset :use_config_yaml, false

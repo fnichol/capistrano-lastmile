@@ -1,6 +1,15 @@
 Capistrano::Lastmile.load_named(:mysql) do
 
   # =========================================================================
+  # These are default variables that will be set unless overriden.
+  # =========================================================================
+
+  if exists?(:deploy_server)
+    role(:db_server, :no_release => true) { deploy_server }
+  end
+
+
+  # =========================================================================
   # These are the tasks that are available to help with deploying web apps,
   # and specifically, Rails applications. You can have cap give you a summary
   # of them with `cap -T'.
