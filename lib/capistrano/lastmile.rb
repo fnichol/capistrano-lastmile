@@ -25,6 +25,14 @@ module Capistrano
 
       # load in deployment and other task overrides
       load_recipe! %w{deploy_passenger deploy_extras}
+
+      # load in local recipies
+      Dir['vendor/plugins/*/recipes/*.rb'].each do |recipe|
+        load { load recipe }
+      end
+
+      # load in project config/deploy.rb
+      load { load 'config/deploy' } if File.exists?("config/deploy.rb")
     end
   end
 end
