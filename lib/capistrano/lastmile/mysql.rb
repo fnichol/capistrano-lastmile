@@ -48,6 +48,10 @@ Capistrano::Lastmile.load_named(:mysql) do
     task :create, :roles => :db_server do
       resolve_passwords
       
+      if ENV['db_server_username']
+        set :db_server_username, ENV['db_server_username']
+      end
+
       username = fetch(:db_server_username, "root")
       password = pass_prompt("#{username} db password on #{db_host}: ")
       
