@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Fletcher Nichol"]
   s.email       = ["fnichol@nichol.ca"]
   s.homepage    = "http://github.com/fnichol/capistrano-lastmile"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Take capistrano the last mile to deployment bliss}
+  s.description = %q{A collection of recipes and sane defaults for common modern capistrano deployment tasks.}
 
   s.rubyforge_project = "capistrano-lastmile"
 
