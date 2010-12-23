@@ -7,25 +7,25 @@ Capistrano::Lastmile.load_named(:deploy) do
   # =========================================================================
 
   namespace :deploy do
-    
-    unless exists?(:use_mysql) && use_mysql == false
-      desc <<-DESC
-        Turn-key installation of the app.
-      DESC
-      task :turnkey do
-        block_warn  <<-WARN
-          This task will completely initialize your enviornment from nothing
-          to a running application. If you want to update a running app, this
-          is not the task for you.
-        WARN
-        unless Capistrano::CLI.debug_prompt("turn-key installation") =~ /^y/i
-          abort "Aborting turn-key installation."
-        end
-        
-        setup
-        db.create
-        cold
+
+    desc <<-DESC
+      Turn-key installation of the app.
+    DESC
+    task :turnkey do
+      block_warn  <<-WARN
+        This task will completely initialize your enviornment from nothing
+        to a running application. If you want to update a running app, this
+        is not the task for you.
+      WARN
+      unless Capistrano::CLI.debug_prompt("turn-key installation") =~ /^y/i
+        abort "Aborting turn-key installation."
       end
+
+      setup
+      unless exists?(:use_mysql) && use_mysql == false
+        db.create
+      end
+      cold
     end
 
     desc <<-DESC
@@ -34,7 +34,7 @@ Capistrano::Lastmile.load_named(:deploy) do
       other reason) not currently running. It will deploy the code, run any \
       pending migrations, and then instead of invoking `deploy:restart', it \
       will invoke `deploy:start' to fire up the application servers.
-      
+
       [NOTE] This overides the capistrano default by adding the "db:seed" task.
     DESC
     task :cold do
