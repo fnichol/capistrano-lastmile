@@ -4,8 +4,8 @@ Capistrano::Lastmile.load_named(:mysql) do
   # These are default variables that will be set unless overriden.
   # =========================================================================
 
-  if exists?(:deploy_server)
-    role(:db_server, :no_release => true) { deploy_server }
+  role(:db_server, :no_release => true) do
+    deploy_server if exists?(:deploy_server)
   end
 
 
