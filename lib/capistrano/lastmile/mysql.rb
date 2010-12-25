@@ -4,6 +4,8 @@ Capistrano::Lastmile.load_named(:mysql) do
   # These are default variables that will be set unless overriden.
   # =========================================================================
 
+  lm_cset :create_remote_db_user, false
+
   role(:db_server, :no_release => true) do
     deploy_server if exists?(:deploy_server)
   end
@@ -52,16 +54,27 @@ Capistrano::Lastmile.load_named(:mysql) do
         set :db_server_username, ENV['db_server_username']
       end
 
+      remote_db_user_env = case ENV['create_remote_db_user']
+                           when /true/i then true
+                           when /false/i then false
+                           end
+      unless remote_db_user_env.nil?
+        set :create_remote_db_user, remote_db_user_env
+      end
+
       username = fetch(:db_server_username, "root")
       password = pass_prompt("#{username} db password on #{db_host}: ")
       
       ddls = [
         "create database #{db_database};",
         "use #{db_database}; create user '#{db_username}'@'localhost' identified by '#{db_password}';",
-        "use #{db_database}; create user '#{db_username}'@'%' identified by '#{db_password}';",
-        "use #{db_database}; grant all privileges on #{db_database}.* to '#{db_username}'@'localhost';",
-        "use #{db_database}; grant all privileges on #{db_database}.* to '#{db_username}'@'%';",
+        "use #{db_database}; grant all privileges on #{db_database}.* to '#{db_username}'@'localhost';"
       ]
+
+      if exists?(:create_remote_db_user) && create_remote_db_user == true
+        ddls << "use #{db_database}; create user '#{db_username}'@'%' identified by '#{db_password}';"
+        ddls << "use #{db_database}; grant all privileges on #{db_database}.* to '#{db_username}'@'%';"
+      end
 
       # stash :default_shell if we happen to be using rvm
       stash_default_shell = false
