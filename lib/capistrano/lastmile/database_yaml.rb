@@ -5,11 +5,39 @@ Capistrano::Lastmile.load_named(:database_yaml) do
   # =========================================================================
 
   ##
+  # Finds the appropriate database.yml.erb. There are only 2 possible
+  # locations that the erb file can exist:
+  #
+  # * in `config/templates/database.yml.erb`
+  # * in `vendor/plugins/*/recipes/templates/database.yml.erb`
+  # * a default version in this gem
+  #
+  # The first match in the above list will win, meaning that
+  # `config/templates/database.yml.erb` overrides the `vendor/.../` version.
+  def find_database_yml_file
+    config_version = File.join(%w{config templates database.yml.erb})
+    vendor_version = File.join(
+      %w{vendor plugins * recipes templates database.yml.erb})
+
+    if File.exists?(config_version)
+      logger.debug "Using #{config_version} as database template"
+      config_version
+    elsif ! Dir[vendor_version].empty?
+      c = vendor_version.first
+      logger.debug "Using #{c} as database template"
+      c
+    else
+      d = File.join(File.dirname(__FILE__), %w{templates database.yml.erb})
+      logger.debug "Using default database.yml.erb from gem"
+      d
+    end
+  end
+
+  ##
   # Writes out a database.yml from an ERB template.
   #
   def database_yml
-    template = File.read(File.join(File.dirname(__FILE__), 
-      %w{templates database.yml.erb}))
+    template = File.read()
     ERB.new(template).result(binding)
   end
 

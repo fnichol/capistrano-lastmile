@@ -5,11 +5,44 @@ Capistrano::Lastmile.load_named(:config_yaml) do
   # =========================================================================
 
   ##
+  # Finds the appropriate config.yml.erb. There are only 2 possible locations
+  # that the erb file can exist:
+  #
+  # * in `config/templates/config.yml.erb`
+  # * in `vendor/plugins/*/recipes/templates/config.yml.erb`
+  #
+  # The first match in the above list will win, meaning that
+  # `config/templates/config.yml.erb` overrides the `vendor/.../` version.
+  def find_config_yml_file
+    config_version = File.join(%w{config templates config.yml.erb})
+    vendor_version = File.join(
+      %w{vendor plugins * recipes templates config.yml.erb})
+
+    if File.exists?(config_version)
+      logger.debug "Using #{config_version} as config template"
+      config_version
+    elsif ! Dir[vendor_version].empty?
+      c = vendor_version.first
+      logger.debug "Using #{c} as config template"
+      c
+    else
+      abort <<-ABORT.gsub(/^ {8}/, '')
+
+        Config file config.yml.erb cannot be found in the project. You must
+        create this file in one of the following locations:
+
+          #{config_version}
+          #{vendor_version}
+
+      ABORT
+    end
+  end
+
+  ##
   # Writes out a config.yml from an ERB template.
   #
   def config_yml
-    template = File.read(File.join(File.dirname(__FILE__), 
-      %w{templates config.yml.erb}))
+    template = File.read(find_config_yml_file)
     ERB.new(template).result(binding)
   end
 
@@ -19,6 +52,11 @@ Capistrano::Lastmile.load_named(:config_yaml) do
   # and specifically, Rails applications. You can have cap give you a summary
   # of them with `cap -T'.
   # =========================================================================
+
+  # ensure that a config.yml.erb template exists in the project
+  on :load do
+    find_config_yml_file
+  end
 
   namespace :config do
 
