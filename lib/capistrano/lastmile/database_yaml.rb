@@ -23,7 +23,7 @@ Capistrano::Lastmile.load_named(:database_yaml) do
       logger.debug "Using #{config_version} as database template"
       config_version
     elsif ! Dir[vendor_version].empty?
-      c = vendor_version.first
+      c = Dir[vendor_version].first
       logger.debug "Using #{c} as database template"
       c
     else
@@ -37,7 +37,7 @@ Capistrano::Lastmile.load_named(:database_yaml) do
   # Writes out a database.yml from an ERB template.
   #
   def database_yml
-    template = File.read()
+    template = File.read(File.expand_path(find_database_yml_file))
     ERB.new(template).result(binding)
   end
 

@@ -22,7 +22,7 @@ Capistrano::Lastmile.load_named(:config_yaml) do
       logger.debug "Using #{config_version} as config template"
       config_version
     elsif ! Dir[vendor_version].empty?
-      c = vendor_version.first
+      c = Dir[vendor_version].first
       logger.debug "Using #{c} as config template"
       c
     else
