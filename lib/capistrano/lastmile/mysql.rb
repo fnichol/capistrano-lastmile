@@ -7,7 +7,11 @@ Capistrano::Lastmile.load_named(:mysql) do
   lm_cset :create_remote_db_user, false
 
   role(:db_server, :no_release => true) do
-    deploy_server if exists?(:deploy_server)
+    if exists?(:db_server)
+      db_server
+    elsif exists?(:deploy_server)
+      deploy_server
+    end
   end
 
 
@@ -33,9 +37,10 @@ Capistrano::Lastmile.load_named(:mysql) do
       also needs `:no_release => true' so that it won't run the other \
       capistrano tasks such as "deploy:setup".
       
-      To use this task, you need to set the :db_server variable like so:
+      To use this task, you need to set the :db_server variable like so if \
+      your database server is not also :deploy_server (which is the default):
       
-        set :db_server, "dbserver.example.com", :no_release => true
+        set :db_server, "dbserver.example.com"
         
       It will prompt by default for your root user's password and use that to \
       run the DDL commands. If you need to use another user, then the \
