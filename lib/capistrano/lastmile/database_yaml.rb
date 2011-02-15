@@ -117,6 +117,7 @@ Capistrano::Lastmile.load_named(:database_yaml) do
     end
 
     desc <<-DESC
+      [internal]
       Sets variables for database passwords. This task extracts database \
       passwords from the remote database.yml. You can add a "before" or \
       "after" hook on this task to set other password variables if your \
@@ -129,6 +130,7 @@ Capistrano::Lastmile.load_named(:database_yaml) do
     end
     
     desc <<-DESC
+      [internal]
       Asks for a database password and sets a variable. This will be used to \
       inject the value into the database.yml template. If multiple datbase \
       connections are used, then you can add a "before" or "after" hook on \
