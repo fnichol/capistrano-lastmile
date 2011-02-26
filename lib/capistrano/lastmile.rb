@@ -33,7 +33,7 @@ module Capistrano
       load { load 'deploy' }
 
       # load in deployment and other task overrides
-      load_recipe! %w{deploy_passenger deploy_extras}
+      load_recipe! %w{ruby/deploy_passenger deploy_extras}
 
       # load in local recipies
       Dir['vendor/plugins/*/recipes/*.rb'].each do |recipe|

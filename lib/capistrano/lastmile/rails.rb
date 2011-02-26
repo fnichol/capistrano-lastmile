@@ -7,12 +7,12 @@ module Capistrano
         defaults
         rvm
         bundler
-        database_yaml
-        db 
+        ruby/database_yaml
+        rails/db
         mysql
-        config_yaml
-        console
-        log
+        ruby/config_yaml
+        rails/console
+        rails/log
         whenever
         mercurial
         git
