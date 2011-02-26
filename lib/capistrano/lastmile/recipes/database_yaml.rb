@@ -27,7 +27,7 @@ Capistrano::Lastmile.load_named(:database_yaml) do
       logger.debug "Using #{c} as database template"
       c
     else
-      d = File.join(File.dirname(__FILE__), %w{templates database.yml.erb})
+      d = File.join(File.dirname(__FILE__), %w{.. templates database.yml.erb})
       logger.debug "Using default database.yml.erb from gem"
       d
     end
