@@ -25,6 +25,10 @@ Capistrano::Lastmile.load do
       rails_env
     elsif (ENV['RAILS_ENV'])
       ENV['RAILS_ENV']
+    elsif exists?(:rack_env)
+      rack_env
+    elsif (ENV['RACK_ENV'])
+      ENV['RACK_ENV']
     else
       'production'
     end
