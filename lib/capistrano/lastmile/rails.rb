@@ -5,6 +5,7 @@ module Capistrano
       %w{
         helpers
         defaults
+        rails/defaults
         rvm
         bundler
         ruby/database_yaml
