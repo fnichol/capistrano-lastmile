@@ -22,7 +22,7 @@ Capistrano::Lastmile.load_named(:deploy) do
       end
 
       setup
-      unless exists?(:use_mysql) && use_mysql == false
+      if fetch(:use_mysql, false)
         db.create
       end
       cold
@@ -35,12 +35,15 @@ Capistrano::Lastmile.load_named(:deploy) do
       pending migrations, and then instead of invoking `deploy:restart', it \
       will invoke `deploy:start' to fire up the application servers.
 
-      [NOTE] This overides the capistrano default by adding the "db:seed" task.
+      [NOTE] This overides the capistrano default by adding the "db:seed" \
+      task, if the `db' recipe is loaded.
     DESC
     task :cold do
       update
       migrate
-      db.seed
+      if fetch(:use_db, false)
+        db.seed
+      end
       start
     end
   end

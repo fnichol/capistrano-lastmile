@@ -20,4 +20,11 @@ Capistrano::Lastmile.load_named(:defaults) do
   role(:web)                  { deploy_server if exists?(:deploy_server) }
   role(:app)                  { deploy_server if exists?(:deploy_server) }
   role(:db, :primary => true) { deploy_server if exists?(:deploy_server) }
+
+  # common default-enabled recipes
+  lm_cset :use_rvm,           true
+  lm_cset :use_bundler,       true
+  lm_cset :use_mercurial,     true
+  lm_cset :use_git,           true
+  lm_cset :use_multistage,    true
 end

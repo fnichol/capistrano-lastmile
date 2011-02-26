@@ -17,6 +17,14 @@ module Capistrano
         multistage
       }
     end
+
+    def self.override_recipes
+      %w{
+        ruby/deploy_passenger
+        deploy_extras
+        rack/disable_railsisms
+      }
+    end
   end
 end
 

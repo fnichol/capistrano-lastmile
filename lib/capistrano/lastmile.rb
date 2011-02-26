@@ -33,7 +33,17 @@ module Capistrano
       load { load 'deploy' }
 
       # load in deployment and other task overrides
-      load_recipe! %w{ruby/deploy_passenger deploy_extras}
+      begin
+        load_recipe!(override_recipes)
+      rescue NameError
+        abort <<-MSG.gsub(/^ {8}/, '')
+
+          ABORT: You cannot directly require "capistrano/lastmile" but rather
+          require one of the deployment flavors under "capistrano/lastmile/*"
+          to load in the appropriate recipes.
+
+        MSG
+      end
 
       # load in local recipies
       Dir['vendor/plugins/*/recipes/*.rb'].each do |recipe|
