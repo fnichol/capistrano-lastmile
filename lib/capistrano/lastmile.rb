@@ -17,8 +17,17 @@ module Capistrano
 
     def self.load_all!
       # load environment and extra recipes
-      load_recipe! %w{helpers defaults rvm bundler database_yaml db 
-        mysql config_yaml console log whenever mercurial git multistage}
+      begin
+        load_recipe!(extra_recipes)
+      rescue NameError
+        abort <<-MSG.gsub(/^ {8}/, '')
+
+          ABORT: You cannot directly require "capistrano/lastmile" but rather
+          require one of the deployment flavors under "capistrano/lastmile/*"
+          to load in the appropriate recipes.
+
+        MSG
+      end
 
       # load default capistrano recipes
       load { load 'deploy' }
