@@ -15,7 +15,7 @@ Capistrano::Lastmile.load_named(:multistage) do
     desc <<-DESC
       Lists all valid deployment environments.
     DESC
-    task :stages, :roles => :app, :except => { :no_release => true } do
+    task :all_stages, :roles => :app, :except => { :no_release => true } do
       puts "\nValid stages are:\n\n"
       fetch(:stages, []).each { |s| puts "  #{s}" }
       puts
