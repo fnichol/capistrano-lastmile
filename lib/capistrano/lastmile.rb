@@ -12,7 +12,7 @@ module Capistrano
     end
 
     def self.load_recipe!(*recipes)
-      recipes.flatten.each { |r| require "capistrano/lastmile/#{r}" }
+      recipes.flatten.each { |r| require "capistrano/lastmile/recipes/#{r}" }
     end
 
     def self.load_all!
