@@ -75,7 +75,7 @@ Capistrano::Lastmile.load do
   # @param [Integer] inner_width  width of inner width of text block
   def block_warn(msg, inner_width=70)
     puts "\n#{'*' * (inner_width + 4)}"
-    msg.each { |l| puts "* #{l.lstrip.rstrip.ljust(inner_width, " ")} *" }
+    msg.each_line { |l| puts "* #{l.lstrip.rstrip.ljust(inner_width, " ")} *" }
     puts "#{'*' * (inner_width + 4)}\n\n\n"
   end
 end
