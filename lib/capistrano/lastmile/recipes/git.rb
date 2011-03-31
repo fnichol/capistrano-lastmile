@@ -9,7 +9,9 @@ Capistrano::Lastmile.load_named(:git) do
       end
 
       def all_branches
-        @all_branches ||= %x{git branch --no-color}.map { |l| l.sub(/^[ *]+/, '').chomp }
+        @all_branches ||= %x{git branch --no-color}.split("\n").map do |l|
+          l.sub(/^[ *]+/, '').chomp
+        end
       end
  
       set :branch do

@@ -5,13 +5,13 @@ Capistrano::Lastmile.load_named(:mercurial) do
     if exists?(:scm) && scm == :mercurial
 
       def all_tags
-        @all_tags ||= %x{hg tags}.map do |line|
+        @all_tags ||= %x{hg tags}.split("\n").map do |line|
           line.sub(/^([^\s]+)\s+.*$/, '\1').chomp
         end
       end
 
       def all_branches
-        @all_branches ||= %x{hg branches}.map do |line|
+        @all_branches ||= %x{hg branches}.split("\n").map do |line|
           line.sub(/^([^\s]+)\s+.*$/, '\1').chomp
         end
       end
