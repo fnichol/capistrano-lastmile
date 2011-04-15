@@ -15,7 +15,7 @@ Capistrano::Lastmile.load_named(:defaults) do
   lm_cset :keep_releases,   10
   lm_cset :bundle_without,  [:development, :test, :test_mac]
 
-  lm_cset(:deploy_to)       { "/srv/#{application}" }
+  lm_cset(:deploy_to)       { "/srv/#{application}_#{deploy_env}" }
 
   role(:web)                  { deploy_server if exists?(:deploy_server) }
   role(:app)                  { deploy_server if exists?(:deploy_server) }
