@@ -72,6 +72,7 @@ Capistrano::Lastmile.load_named(:config_yaml) do
       if cmd_if("-f #{shared_path}/config/config.yml") && ENV["force"].nil?
         inform "config.yml already exists, skipping"
       else
+        ask_for_secrets
         run "mkdir -p #{shared_path}/config"
         put config_yml, "#{shared_path}/config/config.yml"
       end
@@ -82,6 +83,18 @@ Capistrano::Lastmile.load_named(:config_yaml) do
     DESC
     task :cp_config_yml, :roles => :app, :except => { :no_release => true } do
      run "cp #{shared_path}/config/config.yml #{release_path}/config/config.yml"
+    end
+
+    desc <<-DESC
+      [internal]
+      Hook task for adding tokens or secrets to config.yml. This will be \
+      used to inject the value into the config.yml template. You can add \
+      a "before" or "after" hook on this task. For example:
+
+        after "config:ask_for_secrets", "my:ask_for_api_key"
+    DESC
+    task :ask_for_secrets, :except => { :no_release => true } do
+      # no-op hook
     end
   end
 
