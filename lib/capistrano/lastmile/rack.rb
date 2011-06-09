@@ -12,6 +12,7 @@ module Capistrano
         mysql
         ruby/config_yaml
         whenever
+        ruby/hoptoad
         mercurial
         git
         multistage

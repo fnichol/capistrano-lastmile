@@ -15,6 +15,7 @@ module Capistrano
         rails/console
         rails/log
         whenever
+        ruby/hoptoad
         mercurial
         git
         multistage
