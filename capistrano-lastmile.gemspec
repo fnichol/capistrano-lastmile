@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "capistrano",  "~> 2.5.19"
-  s.add_dependency "rvm",         "~> 1.2"
+  s.add_dependency "rvm",         ">= 1.0.0"
 end
